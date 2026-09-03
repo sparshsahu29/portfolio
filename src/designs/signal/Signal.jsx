@@ -213,7 +213,7 @@ function Hero() {
               ['ads_written', '2,500+', '#ffffff'],
             ].map(([k, v, c]) => (
               <div key={k} className="flex items-baseline justify-between gap-4">
-                <span className="text-white/35">"{k}":</span>
+                <span className="text-white/35">&quot;{k}&quot;:</span>
                 <span style={{ color: c }}>{v}</span>
               </div>
             ))}
@@ -486,7 +486,7 @@ function Journal() {
           Journal
         </h2>
         <p className="font-mono text-[11px] text-white/35">
-          // notes on brand, funnels and attention
+          {'// notes on brand, funnels and attention'}
         </p>
       </div>
 
@@ -629,7 +629,7 @@ function Section({ id, label, children }) {
   return (
     <section id={id} className="mx-auto max-w-6xl scroll-mt-20 px-5 py-20 sm:px-8 sm:py-28">
       <p className="mb-8 font-mono text-[10px] tracking-[0.3em] text-white/25 uppercase">
-        // {label}
+        {`// ${label}`}
       </p>
       {children}
     </section>

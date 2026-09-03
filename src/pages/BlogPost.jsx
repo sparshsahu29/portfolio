@@ -101,29 +101,31 @@ export default function BlogPost() {
   const { slug } = useParams()
   const { posts } = useContent()
 
-  const [post, setPost] = useState(() => (posts ?? []).find((p) => p.slug === slug) ?? null)
-  const [loading, setLoading] = useState(isSanityConfigured)
+  // { slug, data } of the last completed Sanity fetch; loading while it lags the URL
+  const [fetched, setFetched] = useState({ slug: null, data: null })
+  const loading = isSanityConfigured && fetched.slug !== slug
+
+  const listed = (posts ?? []).find((p) => p.slug === slug) ?? null
+  const post = (fetched.slug === slug && fetched.data) || listed
 
   useEffect(() => {
-    setPost((posts ?? []).find((p) => p.slug === slug) ?? null)
     if (!isSanityConfigured || !sanityClient) return
 
     let cancelled = false
-    setLoading(true)
     sanityClient
       .fetch(postQuery, { slug })
       .then((data) => {
-        if (!cancelled && data) setPost(data)
+        if (!cancelled) setFetched({ slug, data: data ?? null })
       })
-      .catch((err) => console.error('[sanity] post fetch failed:', err))
-      .finally(() => {
-        if (!cancelled) setLoading(false)
+      .catch((err) => {
+        console.error('[sanity] post fetch failed:', err)
+        if (!cancelled) setFetched({ slug, data: null })
       })
 
     return () => {
       cancelled = true
     }
-  }, [slug, posts])
+  }, [slug])
 
   const related = post?.related ?? (posts ?? []).filter((p) => p.slug !== slug).slice(0, 3)
 

@@ -247,7 +247,7 @@ function About() {
         <Card tone="cream" hover={false}>
           <Label>{randomThings.title}</Label>
           <ul className="mt-4 space-y-3">
-            {randomThings.items.map((r, i) => (
+            {randomThings.items.map((r) => (
               <li key={r} className="flex gap-3 text-sm leading-snug text-ink/70">
                 <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-crimson" />
                 {r}
