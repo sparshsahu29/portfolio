@@ -14,6 +14,8 @@ import { EmailButton, PaperShell, SiteFooter, SiteNav } from '../designs/paper-t
 import TestimonialCarousel from '../components/TestimonialCarousel.jsx'
 import PitchStack from '../components/PitchStack.jsx'
 import Arsenal from '../sections/Arsenal.jsx'
+import RandomThings from '../sections/RandomThings.jsx'
+import Roadmap from '../sections/Roadmap.jsx'
 import ClientWork from '../sections/ClientWork.jsx'
 import { useContent } from '../content/ContentContext.jsx'
 import { textures } from '../data/content.js'
@@ -25,7 +27,9 @@ export default function Home() {
         <SiteNav />
         <Hook />
         <Philosophy />
-        <MegaCaseStudy />
+        <Roadmap />
+        <Results />
+        <RandomThings />
         <Arsenal />
         <ClientWork />
         <WhyHireMe />
@@ -41,30 +45,28 @@ function Hook() {
   const { hero, profile } = useContent()
 
   return (
-    <section id="top" className="relative overflow-hidden px-5 pt-14 pb-24 sm:px-10 sm:pt-20">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+    <section id="top" className="relative overflow-hidden px-5 pt-10 pb-8 sm:px-10 sm:pt-12">
+      <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1fr_1fr]">
         <motion.div initial="hidden" animate="show" variants={rise}>
-          <p className="font-hand text-3xl text-crimson sm:text-4xl">{hero.eyebrow}</p>
-
-          <h1 className="mt-2 font-display text-[clamp(3rem,11vw,7.5rem)] leading-[0.82] text-ink">
+          <h1 className="font-display text-[clamp(2.75rem,8vw,5.25rem)] leading-[0.86] text-ink">
             Content
             <br />
             with <span className="text-crimson italic">intent</span>
           </h1>
 
-          <div className="relative mt-8 max-w-md">
+          <div className="relative mt-6 max-w-md">
             <img
               src={textures.ruled}
               alt=""
-              className="pointer-events-none absolute -inset-x-6 -inset-y-5 -z-10 h-[calc(100%+2.5rem)] w-[calc(100%+3rem)] rotate-[-1.2deg] object-fill opacity-90"
+              className="pointer-events-none absolute -inset-x-6 -inset-y-4 -z-10 h-[calc(100%+2rem)] w-[calc(100%+3rem)] rotate-[-1.2deg] object-fill opacity-90"
             />
-            <p className="relative py-2 font-display text-2xl leading-snug text-ink sm:text-3xl">
+            <p className="relative py-1.5 font-display text-xl leading-snug text-ink sm:text-2xl">
               Positioning before posting.{' '}
               <span className="text-crimson underline decoration-wavy decoration-2">Always.</span>
             </p>
           </div>
 
-          <p className="mt-8 max-w-lg text-base leading-relaxed text-ink/70 sm:text-lg">
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-ink/70 sm:text-[17px]">
             <span className="font-semibold text-ink">{profile.yearsExperience} years</span> building
             relevance for brands in a world with a{' '}
             <span className="marker-underline font-semibold text-bronze">
@@ -73,10 +75,10 @@ function Hook() {
             .
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-4">
+          <div className="mt-7 flex flex-wrap items-center gap-4">
             <a
               href={hero.primaryCta.href}
-              className="group inline-flex items-center gap-2 bg-ink px-7 py-4 text-sm font-semibold text-white transition hover:bg-crimson sm:text-base"
+              className="group inline-flex items-center gap-2 bg-ink px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-crimson sm:text-base"
             >
               {hero.primaryCta.label}
               <ArrowDown size={16} className="transition group-hover:translate-y-0.5" />
@@ -84,7 +86,7 @@ function Hook() {
             <EmailButton size="md" label={hero.secondaryCta.label} />
           </div>
 
-          <div className="mt-9 flex flex-wrap items-center gap-2">
+          <div className="mt-7 flex flex-wrap items-center gap-2">
             {profile.roles.map((r) => (
               <Chip key={r}>{r}</Chip>
             ))}
@@ -93,7 +95,7 @@ function Hook() {
           <img
             src={textures.socialIcons}
             alt=""
-            className="mt-8 h-8 w-auto opacity-90"
+            className="mt-5 h-6 w-auto opacity-80"
             loading="lazy"
           />
         </motion.div>
@@ -108,11 +110,8 @@ function Hook() {
           <img
             src={profile.portraitRed}
             alt={profile.fullName}
-            className="relative mx-auto max-h-[60vh] w-auto object-contain drop-shadow-[0_24px_40px_rgba(192,17,17,0.18)]"
+            className="relative mx-auto max-h-[56vh] w-auto object-contain drop-shadow-[0_24px_40px_rgba(192,17,17,0.18)] lg:max-h-[78vh] lg:min-h-[520px]"
           />
-          <div className="absolute -right-2 bottom-6 rotate-3 bg-white px-4 py-2 shadow-lg">
-            <p className="font-hand text-xl text-ink">{profile.location}</p>
-          </div>
         </motion.div>
       </div>
     </section>
@@ -122,10 +121,10 @@ function Hook() {
 /* ----------------------------------------- section 2 · core philosophy */
 
 function Philosophy() {
-  const { about, philosophy, profile, randomThings } = useContent()
+  const { about, philosophy, profile } = useContent()
 
   return (
-    <Section id="about">
+    <Section id="about" className="!pt-8 sm:!pt-12">
       <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
         {/* polaroid */}
         <motion.div
@@ -135,7 +134,7 @@ function Philosophy() {
           viewport={{ once: true, amount: 0.3 }}
           className="mx-auto w-full max-w-xs lg:mx-0 lg:max-w-none"
         >
-          <div className="relative rotate-[-2deg] bg-white p-3 pb-16 shadow-[0_18px_40px_-20px_rgba(18,18,18,0.55)]">
+          <div className="relative rotate-[-2deg] bg-white p-3 pb-10 shadow-[0_18px_40px_-20px_rgba(18,18,18,0.55)]">
             <span className="tape -top-4 left-1/2 -translate-x-1/2 -rotate-3" />
             <img
               src={profile.portraitPhoto}
@@ -143,23 +142,6 @@ function Philosophy() {
               loading="lazy"
               className="aspect-[3/4] w-full object-cover"
             />
-            <p className="absolute right-0 bottom-4 left-0 text-center font-hand text-2xl text-ink/65">
-              {philosophy.polaroidCaption}
-            </p>
-          </div>
-
-          <div className="mt-10 hidden lg:block">
-            <p className="font-mono text-[10px] tracking-[0.24em] text-bronze uppercase">
-              {randomThings.title}
-            </p>
-            <ul className="mt-3 space-y-2.5">
-              {randomThings.items.slice(0, 5).map((r) => (
-                <li key={r} className="flex gap-3 text-sm leading-snug text-ink/65">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-crimson" />
-                  {r}
-                </li>
-              ))}
-            </ul>
           </div>
         </motion.div>
 
@@ -170,10 +152,7 @@ function Philosophy() {
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <p className="font-mono text-[11px] tracking-[0.3em] text-bronze uppercase">
-              {philosophy.eyebrow}
-            </p>
-            <h2 className="mt-3 font-display text-5xl leading-[0.92] text-ink sm:text-7xl">
+            <h2 className="font-display text-5xl leading-[0.92] text-ink sm:text-7xl">
               {philosophy.title}
             </h2>
             <div className="mt-5 h-[3px] w-24 bg-crimson" />
@@ -226,124 +205,174 @@ function Philosophy() {
   )
 }
 
-/* --------------------------------------- section 3 · mega case study */
+/* ------------------------------------------------- section 3 · results */
 
-function MegaCaseStudy() {
-  const { caseStudy, metrics } = useContent()
+/**
+ * One taped card per brand, laid out like the deck slide: headline in
+ * handwriting, before / after / milestone on the left with the sales graph,
+ * the breakdown on the right, headline numbers in a strip underneath.
+ * WHOLELEAF is the only brand with numbers today; more can be added as cards.
+ */
+function Results() {
+  const { results, caseStudy, metrics } = useContent()
 
   return (
-    <Section id="results">
-      <SectionTitle kicker="the mega case study">{caseStudy.client}</SectionTitle>
+    <Section id="results" className="!pt-6 sm:!pt-10">
+      <SectionTitle kicker="results" hand={results.subtitle}>
+        {results.title}
+      </SectionTitle>
 
-      {/* heavy typography before / after */}
-      <motion.div
-        variants={rise}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.25 }}
-        className="grid gap-8 border-y border-ink/15 py-10 sm:grid-cols-[auto_1fr] sm:gap-14 sm:py-14"
-      >
-        <div>
-          <p className="font-mono text-[11px] tracking-[0.28em] text-ink/40 uppercase">Before</p>
-          <p className="mt-2 font-display text-3xl leading-none text-ink/40 line-through sm:text-5xl">
-            Barely 1 crore
-          </p>
-          <p className="mt-1 text-sm text-ink/40">a year</p>
+      <BrandResult brand={caseStudy} stats={metrics.cards} boards={metrics.boards} />
+    </Section>
+  )
+}
+
+function BrandResult({ brand, stats, boards = [] }) {
+  const headline = brand.eyebrow.split(brand.client)
+
+  return (
+    <motion.div
+      variants={rise}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <PaperCard tape tone="cream" rotate={-0.4} className="px-6 py-8 sm:px-10 sm:py-10">
+        {/* "At WHOLELEAF, we were nowhere" */}
+        <p className="font-hand text-3xl leading-tight text-bronze sm:text-4xl lg:text-5xl">
+          {headline[0]}
+          <span className="font-display not-italic tracking-wide text-crimson">{brand.client}</span>
+          {headline[1]}
+        </p>
+
+        <div className="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+          {/* left: the arc of the story + proof */}
+          <div>
+            <dl className="space-y-2.5 text-[15px] sm:text-base">
+              <div className="flex gap-3">
+                <dt className="w-16 shrink-0 font-mono text-[11px] tracking-[0.2em] text-ink/45 uppercase pt-1">
+                  Before
+                </dt>
+                <dd className="text-ink/60 line-through decoration-ink/40">{brand.before}</dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-16 shrink-0 font-mono text-[11px] tracking-[0.2em] text-crimson uppercase pt-1">
+                  After
+                </dt>
+                <dd>
+                  <span className="font-display text-2xl leading-none text-crimson sm:text-3xl">
+                    {brand.after}
+                  </span>{' '}
+                  <span className="text-ink/70">{brand.afterSuffix}</span>
+                </dd>
+              </div>
+            </dl>
+
+            <motion.span
+              variants={rise}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ delay: 0.15 }}
+              className="mt-5 inline-flex items-center gap-2 bg-ink px-4 py-2 text-[13px] font-semibold text-white"
+            >
+              <Star size={14} className="fill-crimson text-crimson" />
+              {brand.milestone}
+            </motion.span>
+
+            <ProofStack
+              cover={brand.proofImage}
+              coverCaption="Total sales over time — ₹5.64 Cr, +315%"
+              more={boards}
+            />
+          </div>
+
+          {/* right: breakdown */}
+          <div>
+            <p className="font-hand text-3xl text-crimson sm:text-4xl">Breakdown</p>
+            <ul className="mt-4 space-y-4">
+              {brand.breakdown.map((b, i) => (
+                <motion.li
+                  key={i}
+                  variants={rise}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: i * 0.06 }}
+                  className="flex gap-3 border-b border-ink/10 pb-4 last:border-0"
+                >
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-crimson" />
+                  <p className="text-[15px] leading-relaxed text-ink/75">
+                    {b.lead}{' '}
+                    {b.highlight && (
+                      <span className="font-semibold text-crimson">{b.highlight}</span>
+                    )}{' '}
+                    {b.rest}
+                  </p>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <div>
-          <p className="font-mono text-[11px] tracking-[0.28em] text-crimson uppercase">After</p>
-          <p className="mt-2 font-display text-[clamp(3.5rem,13vw,9rem)] leading-[0.8] text-crimson">
-            5.6 crore
-          </p>
-          <p className="mt-3 font-display text-xl text-ink/70 italic sm:text-2xl">
-            in less than a year.
-          </p>
-        </div>
-      </motion.div>
-
-      <motion.div
-        variants={rise}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.4 }}
-        className="mt-8 flex flex-wrap items-center gap-4"
-      >
-        <span className="inline-flex items-center gap-2 bg-ink px-5 py-2.5 text-sm font-semibold text-white">
-          <Star size={15} className="fill-crimson text-crimson" />
-          Raised funding on Shark Tank India — Season 5
-        </span>
-        <span className="font-hand text-2xl text-bronze">{caseStudy.eyebrow}</span>
-      </motion.div>
-
-      {/* metric cards */}
-      <div className="mt-12 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-        {metrics.cards.map((m, i) => (
-          <motion.div
-            key={`${m.label}-${m.value}`}
-            variants={rise}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ delay: i * 0.06 }}
-          >
-            <PaperCard rotate={i % 2 ? -0.7 : 0.7} className="h-full">
-              <p className="font-display text-4xl leading-none text-crimson sm:text-6xl">
-                {m.value}
-              </p>
-              <p className="mt-3 text-sm font-semibold text-ink">{m.label}</p>
-              <p className="mt-0.5 text-xs text-ink/50">{m.sub}</p>
-            </PaperCard>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* breakdown + proof */}
-      <div className="mt-14 grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <p className="font-mono text-[11px] tracking-[0.3em] text-bronze uppercase">
-            How it happened
-          </p>
-          <ul className="mt-5 space-y-5">
-            {caseStudy.breakdown.map((b, i) => (
-              <motion.li
-                key={i}
+        {/* headline numbers */}
+        {stats?.length > 0 && (
+          <div className="mt-9 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-ink/12 pt-7 sm:grid-cols-4">
+            {stats.map((m, i) => (
+              <motion.div
+                key={`${m.label}-${m.value}`}
                 variants={rise}
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.3 }}
-                className="flex gap-4 border-b border-ink/10 pb-5"
+                transition={{ delay: i * 0.06 }}
               >
-                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-crimson" />
-                <p className="text-[15px] leading-relaxed text-ink/75">
-                  {b.lead}{' '}
-                  {b.highlight && (
-                    <span className="font-display text-xl text-crimson">{b.highlight}</span>
-                  )}{' '}
-                  {b.rest}
-                </p>
-              </motion.li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="space-y-6">
-          <Snap src={caseStudy.proofImage} caption="Shark Tank India · Season 5" rotate={0.8} />
-          <div className="grid gap-6 sm:grid-cols-2">
-            {metrics.boards.map((b, i) => (
-              <Snap
-                key={b.image}
-                src={b.image}
-                all={metrics.boards.map((x) => x.image)}
-                index={i}
-                caption={b.label}
-                rotate={i ? 1 : -1}
-              />
+                <p className="font-display text-2xl leading-none text-crimson sm:text-3xl">{m.value}</p>
+                <p className="mt-1.5 text-[13px] font-semibold text-ink">{m.label}</p>
+                <p className="text-xs text-ink/50">{m.sub}</p>
+              </motion.div>
             ))}
           </div>
-        </div>
-      </div>
-    </Section>
+        )}
+      </PaperCard>
+    </motion.div>
+  )
+}
+
+/**
+ * The sales graph sits on top of a visible pile; the Ads Manager boards peek
+ * out behind it. Clicking opens all of them in one lightbox, graph first.
+ */
+function ProofStack({ cover, coverCaption, more = [] }) {
+  const all = [cover, ...more.map((b) => b.image)]
+  const extra = more.length
+
+  return (
+    <div className="relative isolate mt-9 mr-3 mb-3">
+      {/* the pile: one sheet per extra screenshot, fanned out behind the cover */}
+      {more.slice(0, 2).map((b, i) => (
+        <motion.div
+          key={b.image}
+          aria-hidden
+          initial={{ opacity: 0, rotate: 0, x: 0, y: 0 }}
+          whileInView={{ opacity: 1, rotate: (i + 1) * 2.2, x: (i + 1) * 6, y: (i + 1) * 5 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 22, delay: 0.25 + i * 0.08 }}
+          className="absolute inset-0 overflow-hidden bg-white p-2 shadow-[0_10px_24px_-16px_rgba(18,18,18,0.6)]"
+          style={{ zIndex: -1 - i }}
+        >
+          <img src={b.image} alt="" loading="lazy" className="h-full w-full object-cover opacity-80" />
+        </motion.div>
+      ))}
+
+      <Snap src={cover} all={all} index={0} caption={coverCaption} rotate={-0.8} className="relative z-10" />
+
+      {extra > 0 && (
+        <span className="pointer-events-none absolute -top-3 -right-3 z-20 inline-flex items-center gap-1 bg-crimson px-2.5 py-1 font-mono text-[11px] font-semibold text-white shadow-md">
+          +{extra} <span className="font-hand text-sm normal-case">Ads Manager</span>
+        </span>
+      )}
+    </div>
   )
 }
 

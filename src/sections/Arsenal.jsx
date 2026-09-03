@@ -1,5 +1,7 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Section, SectionTitle, rise } from '../designs/paper-trail/parts.jsx'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Section, SectionTitle } from '../designs/paper-trail/parts.jsx'
 import { useLightbox } from '../components/Lightbox.jsx'
 import VideoCard from '../components/VideoCard.jsx'
 import { useContent } from '../content/ContentContext.jsx'
@@ -44,7 +46,7 @@ export default function Arsenal() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-5 sm:gap-7 lg:grid-cols-4">
+            <Rail>
               {grid.items.map((item, i) => (
                 <ArsenalCard
                   key={item._key ?? item.src ?? item.image ?? i}
@@ -53,11 +55,96 @@ export default function Arsenal() {
                   stills={grid.items.filter((x) => x.type !== 'video').map((x) => x.image)}
                 />
               ))}
-            </div>
+            </Rail>
           </div>
         ))}
       </div>
     </Section>
+  )
+}
+
+/**
+ * Horizontal snap rail. Native scrolling (swipe / trackpad / shift-wheel) plus
+ * arrow buttons that page by one viewport. Arrows hide at either end, and the
+ * rail bleeds to the viewport edge on small screens so it reads as scrollable.
+ */
+function Rail({ children }) {
+  const ref = useRef(null)
+  const [edge, setEdge] = useState({ start: true, end: false })
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const update = () => {
+      const max = el.scrollWidth - el.clientWidth
+      setEdge({ start: el.scrollLeft <= 2, end: el.scrollLeft >= max - 2 })
+    }
+    update()
+    el.addEventListener('scroll', update, { passive: true })
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    for (const child of el.children) ro.observe(child)
+    return () => {
+      el.removeEventListener('scroll', update)
+      ro.disconnect()
+    }
+  }, [children])
+
+  const page = (dir) => {
+    const el = ref.current
+    if (!el) return
+    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' })
+  }
+
+  const scrollable = !(edge.start && edge.end)
+
+  return (
+    <div className="group/rail relative">
+      <div
+        ref={ref}
+        className={`scrollbar-none -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-5 px-5 pt-4 pb-4 sm:-mx-10 sm:scroll-px-10 sm:px-10 sm:gap-7 ${
+          scrollable ? 'justify-start' : 'justify-center'
+        }`}
+      >
+        {children}
+      </div>
+
+      {/* edge fades */}
+      <div
+        className={`pointer-events-none absolute inset-y-0 -left-5 w-16 bg-gradient-to-r from-cream to-transparent transition-opacity sm:-left-10 ${
+          edge.start ? 'opacity-0' : 'opacity-100'
+        }`}
+      />
+      <div
+        className={`pointer-events-none absolute inset-y-0 -right-5 w-16 bg-gradient-to-l from-cream to-transparent transition-opacity sm:-right-10 ${
+          edge.end ? 'opacity-0' : 'opacity-100'
+        }`}
+      />
+
+      {scrollable && (
+        <>
+          <RailButton dir={-1} hidden={edge.start} onClick={() => page(-1)} />
+          <RailButton dir={1} hidden={edge.end} onClick={() => page(1)} />
+        </>
+      )}
+    </div>
+  )
+}
+
+function RailButton({ dir, hidden, onClick }) {
+  const Icon = dir < 0 ? ChevronLeft : ChevronRight
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={dir < 0 ? 'Scroll left' : 'Scroll right'}
+      tabIndex={hidden ? -1 : 0}
+      className={`absolute top-[38%] z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-ink/15 bg-white text-ink shadow-[0_10px_24px_-12px_rgba(18,18,18,0.6)] transition hover:border-crimson hover:bg-crimson hover:text-white sm:flex ${
+        dir < 0 ? '-left-3 lg:-left-6' : '-right-3 lg:-right-6'
+      } ${hidden ? 'pointer-events-none scale-75 opacity-0' : 'opacity-100'}`}
+    >
+      <Icon size={18} />
+    </button>
   )
 }
 
@@ -68,12 +155,11 @@ function ArsenalCard({ item, index, stills }) {
 
   return (
     <motion.figure
-      variants={rise}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ delay: (index % 4) * 0.05 }}
-      className="group flex flex-col"
+      initial={{ opacity: 0, x: 48 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ type: 'spring', stiffness: 180, damping: 24, delay: Math.min(index, 4) * 0.07 }}
+      className="group flex w-[62vw] max-w-[240px] shrink-0 snap-start flex-col sm:w-[220px] lg:w-[240px]"
     >
       {isVideo ? (
         <VideoCard src={item.src} poster={item.poster} title={item.title} rotate={rotate} />

@@ -127,8 +127,16 @@ export function SiteNav() {
   return (
     <header className="sticky top-0 z-50 border-b border-ink/10 bg-cream/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:px-10">
-        <Link to="/" className="shrink-0 font-hand text-2xl leading-none text-crimson">
-          palak<span className="text-ink">.</span>
+        <Link to="/" className="flex min-w-0 shrink flex-col leading-none">
+          <span className="font-hand text-2xl text-crimson">
+            {nav.brand ?? 'Palak'}
+            <span className="text-ink">.</span>
+          </span>
+          {nav.brandTagline && (
+            <span className="mt-1 hidden truncate font-mono text-[9px] tracking-[0.16em] text-ink/55 uppercase min-[400px]:block sm:text-[10px]">
+              {nav.brandTagline}
+            </span>
+          )}
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex">

@@ -10,7 +10,10 @@ const GALLERY = `{
  * Every field is optional — anything missing falls back to src/data/content.js.
  */
 export const siteQuery = /* groq */ `{
-  "nav": *[_type == "siteSettings"][0]{ "links": navLinks[]{ label, to, hash } },
+  "nav": *[_type == "siteSettings"][0]{
+    brand, brandTagline,
+    "links": navLinks[]{ label, to, hash }
+  },
 
   "cta": *[_type == "siteSettings"][0]{
     "label": ctaLabel,
@@ -26,9 +29,7 @@ export const siteQuery = /* groq */ `{
     secondaryCta{ label, href }
   },
 
-  "philosophy": *[_type == "philosophy"][0]{
-    eyebrow, title, polaroidCaption
-  },
+  "philosophy": *[_type == "philosophy"][0]{ title },
 
   "services": *[_type == "services"][0]{
     eyebrow, title, subtitle,
@@ -68,7 +69,9 @@ export const siteQuery = /* groq */ `{
 
   "randomThings": *[_type == "randomThings"][0]{ title, items },
 
-  "whatYoullSee": *[_type == "whatYoullSee"][0]{ title, subtitle, note, items[]{ label, href } },
+  "whatYoullSee": *[_type == "whatYoullSee"][0]{ title, subtitle, items[]{ label, sub, href } },
+
+  "results": *[_type == "results"][0]{ title, subtitle },
 
   "caseStudy": *[_type == "caseStudy"][0]{
     client, eyebrow, before, after, afterSuffix, milestone,

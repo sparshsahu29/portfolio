@@ -93,10 +93,21 @@ export default function BlogIndex() {
 
           {!loading && filtered.length === 0 && (
             <PaperCard tape rotate={-0.6} className="mx-auto max-w-md text-center">
-              <p className="font-display text-2xl text-ink">Nothing here yet.</p>
-              <p className="mt-2 text-sm text-ink/60">
-                Try a different category, or clear the search.
-              </p>
+              {(posts ?? []).length === 0 ? (
+                <>
+                  <p className="font-hand text-3xl text-crimson">Fresh ink, coming soon.</p>
+                  <p className="mt-2 text-sm text-ink/60">
+                    The first posts are being written. Check back shortly.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="font-display text-2xl text-ink">Nothing here yet.</p>
+                  <p className="mt-2 text-sm text-ink/60">
+                    Try a different category, or clear the search.
+                  </p>
+                </>
+              )}
             </PaperCard>
           )}
 

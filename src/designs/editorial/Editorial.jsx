@@ -412,6 +412,7 @@ function Portfolio() {
 /* ------------------------------------------------------------ journal */
 
 function Journal() {
+  if (!posts.length) return null
   return (
     <section id="journal" className="border-y border-[#111]/15 bg-white">
       <div className="mx-auto max-w-[1200px] px-5 py-20 sm:px-8 sm:py-28">

@@ -17,7 +17,7 @@ export const profile = {
     'Creative Strategist',
   ],
   oneLiner: 'Turning customer insights into marketing strategies.',
-  legacyRoles: ['Content writer', 'Social media manager', 'Brand manager'],
+  legacyRoles: ['Product Marketer', 'Creative Strategist', 'Brand Marketer'],
   location: 'Ghaziabad, Uttar Pradesh',
   email: 'palakagarwal512@gmail.com',
   yearsExperience: '4+',
@@ -29,6 +29,8 @@ export const profile = {
 
 /** Global navigation. */
 export const nav = {
+  brand: 'Palak',
+  brandTagline: 'Creative Strategist & Growth-Focused Brand Marketer',
   links: [
     { label: 'Home', to: '/', hash: '' },
     { label: 'Work', to: '/', hash: '#work' },
@@ -64,7 +66,6 @@ export const about = {
   paragraphs: [
     'I spend an unhealthy amount of time thinking about brands. Why do people trust some? Why do they ignore most? Why one line works and another… doesn’t.',
     'Half of me lives in dashboards, audience insights, and content calendars. The other nerdy part of me loves audience psychology and performance metrics.',
-    'It’s been 4+ years of me trying to build relevance in a world with a 3-second attention span.',
     'I care about hooks, but I care more about positioning. I care about trends, but I care more about timing. I care about engagement, but I care most about long-term brand equity.',
   ],
   kicker: 'I zoom out to see the brand & zoom in to fix the comma.',
@@ -72,7 +73,6 @@ export const about = {
   emphasis: [
     'audience psychology',
     'performance metrics',
-    '4+ years',
     'positioning',
     'timing',
     'long-term brand equity',
@@ -82,18 +82,17 @@ export const about = {
 /** Section 2 — framing for the “Who I am?” page of the deck. The copy itself
  *  lives in `about`, exactly as written in the PDF. */
 export const philosophy = {
-  eyebrow: 'Who I am',
   title: 'Who I am?',
-  polaroidCaption: 'zooming out, as usual',
 }
 
 export const randomThings = {
   title: 'Random things about me.',
+  // first half renders left of the figure, second half right — top to bottom
   items: [
-    'I get suspicious when a “premium” brand screams SALE.',
-    'I will ask who this is actually for. Repeatedly.',
-    'I think clarity is hotter than virality.',
     'I ask “but why?” until the room goes quiet.',
+    'I think clarity is hotter than virality.',
+    'I will ask who this is actually for. Repeatedly.',
+    'I get suspicious when a “premium” brand screams SALE.',
     'I check if the promise matches the product.',
     'I care about alignment across the funnel.',
     'I care about what happens after the click.',
@@ -104,15 +103,20 @@ export const randomThings = {
 export const whatYoullSee = {
   title: 'What You’ll See Next',
   subtitle: '(AKA: Things I professionally overthought)',
-  note: 'Note: All images you see are clickable',
+  // each stop scrolls to a section id on the homepage
   items: [
-    { label: 'Social Media Copy', href: '#social' },
-    { label: 'Blogs', href: '#blogs' },
-    { label: 'Emails', href: '#emails' },
-    { label: 'Marketing Content', href: '#marketing' },
-    { label: 'Website Copy', href: '#website-copy' },
-    { label: 'Video Scripts', href: '#creation' },
+    { label: 'Brand Marketing', href: '#results' },
+    { label: 'Creative Strategy', href: '#creative-strategy' },
+    { label: 'Influencer Collabs', href: '#influencer-collabs' },
+    { label: 'Content Creation', href: '#content-creation' },
+    { label: 'Copywriting Portfolio', href: '#work' },
   ],
+}
+
+/** Section heading for the results block. Brands are listed below it — WHOLELEAF is the first. */
+export const results = {
+  title: 'Results',
+  subtitle: 'Brand strategy, with receipts.',
 }
 
 export const caseStudy = {
@@ -141,7 +145,7 @@ export const caseStudy = {
     },
     {
       lead: 'Grew social media following from',
-      highlight: '350 to 15K+',
+      highlight: '350 to 20K+',
       rest: 'in one year through audience research & persona mapping.',
     },
     {
@@ -160,8 +164,8 @@ export const metrics = {
   ],
   /** The four numbers that go directly under the WHOLELEAF case study. */
   cards: [
-    { value: '3.18', label: 'ROAS', sub: 'Campaign B — efficiency play' },
-    { value: '2.76', label: 'ROAS', sub: 'Campaign A — scale play' },
+    { value: '350 → 20K+', label: 'Organic followers', sub: 'In one year' },
+    { value: '₹9 Cr', label: 'ARR', sub: 'In one year' },
     { value: '17.2M', label: 'Views in 30 days', sub: '97.6% driven by ads' },
     { value: '8.9M', label: 'Impressions', sub: 'Single campaign, paid social' },
   ],
@@ -172,7 +176,7 @@ export const metrics = {
     { value: '3.18', label: 'Peak ROAS', sub: 'Campaign B' },
     { value: '₹12.7L', label: 'Ad spend managed', sub: 'Across both campaigns' },
     { value: '2500+', label: 'Ads written', sub: 'Video + static' },
-    { value: '15K+', label: 'Followers grown', sub: 'From 350, in a year' },
+    { value: '20K+', label: 'Organic followers', sub: 'From 350, in a year' },
   ],
   detail: [
     {
@@ -363,8 +367,8 @@ export const services = {
   subtitle: 'Strategy on the inside. Assets you can ship on the outside.',
   grids: [
     {
-      id: 'performance-marketing',
-      title: 'Performance Marketing',
+      id: 'creative-strategy',
+      title: 'Creative Strategy',
       blurb:
         'Static and video ads built to be tested — hooks, headlines and CTAs written against a hypothesis, not a mood board.',
       deliverables: ['Static ad creative', 'Video ad scripts', 'Hook & CTA testing', 'Ads copy at scale'],
@@ -646,159 +650,12 @@ export const blogPage = {
 
 /* ---------------------------------------------------------------- posts */
 
-let keySeed = 0
-const key = () => `k${(keySeed += 1)}`
-
-/** Build a Portable Text block so fallback posts render with the same component as Sanity. */
-const block = (text, style = 'normal') => ({
-  _type: 'block',
-  _key: key(),
-  style,
-  markDefs: [],
-  children: [{ _type: 'span', _key: key(), text, marks: [] }],
-})
-
-const bullets = (items) =>
-  items.map((text) => ({
-    _type: 'block',
-    _key: key(),
-    style: 'normal',
-    listItem: 'bullet',
-    level: 1,
-    markDefs: [],
-    children: [{ _type: 'span', _key: key(), text, marks: [] }],
-  }))
-
 /**
- * Starter posts so the blog is never empty. Once Sanity is connected these are
- * replaced by real documents — the shape is identical.
+ * Her own writing lives in Sanity (`post` documents). Nothing is seeded here on
+ * purpose — the blog shows an empty state until the first post is published.
+ * Blogs written for client brands are a different thing: see `blogs` above.
  */
-export const posts = [
-  {
-    slug: 'clarity-is-hotter-than-virality',
-    title: 'Clarity is hotter than virality',
-    excerpt:
-      'Every brand wants the viral moment. Almost none of them can tell me who the post is for. Here is the test I run before anything ships.',
-    category: 'Positioning',
-    date: '2025-06-18',
-    readingTime: '5 min read',
-    cover: '/assets/blogs/skincare-travel-4.png',
-    body: [
-      block(
-        'Every founder I meet wants the same thing: the post that breaks the internet. Almost none of them can answer the first question I ask — who is this for, specifically?',
-      ),
-      block('The test', 'h2'),
-      block(
-        'Before anything ships, I make the whole team answer three questions in one sentence each. If any answer needs a paragraph, the piece is not ready.',
-      ),
-      ...bullets([
-        'Who is the one person this is for, and what did they just Google?',
-        'What do they believe right now that this changes?',
-        'What is the single next thing we want them to do?',
-      ]),
-      block(
-        'Virality is a distribution outcome. Clarity is a positioning input. You can engineer the second one; the first is a lottery you enter by doing the second one well enough, often enough.',
-      ),
-      block('Why vague copy feels safe', 'h2'),
-      block(
-        'Vague copy is popular because nobody can disagree with it. "Premium quality, trusted by thousands" offends no one on the approval chain. It also persuades no one on the other side of the screen.',
-      ),
-      block(
-        'Specificity is a risk you take on behalf of the customer. Take it.',
-        'blockquote',
-      ),
-    ],
-  },
-  {
-    slug: 'what-happens-after-the-click',
-    title: 'What happens after the click',
-    excerpt:
-      'CTR is a vanity metric if the landing page breaks the promise. A walk through the funnel gaps I keep finding in D2C accounts.',
-    category: 'Performance',
-    date: '2025-05-02',
-    readingTime: '7 min read',
-    cover: '/assets/blogs/wellness-finance-7.png',
-    body: [
-      block(
-        'A 1.89% CTR looks great in a screenshot. It looks a lot less great when click-to-purchase sits at 3%. The ad did its job. Everything after it did not.',
-      ),
-      block('The three gaps I keep finding', 'h2'),
-      ...bullets([
-        'Promise mismatch — the ad sells an outcome, the landing page sells ingredients.',
-        'Format whiplash — a fast, personality-led reel drops you onto a stiff corporate page.',
-        'Decision debt — the page answers "what is it" but never "why now".',
-      ]),
-      block(
-        'None of those are creative problems. They are alignment problems, and they are cheaper to fix than another round of hooks.',
-      ),
-      block('What I audit first', 'h2'),
-      block(
-        'I read the ad and the landing page out loud, back to back. If they sound like two different companies, we have found the leak before opening a single dashboard.',
-      ),
-    ],
-  },
-  {
-    slug: 'the-premium-brand-that-screams-sale',
-    title: 'The “premium” brand that screams SALE',
-    excerpt:
-      'Discounting is not a strategy, it is a confession. What constant sales actually teach your customer about your pricing.',
-    category: 'Brand',
-    date: '2025-03-11',
-    readingTime: '6 min read',
-    cover: '/assets/blogs/tech-b2b-1.png',
-    body: [
-      block(
-        'I get suspicious when a premium brand screams SALE. Not because discounts are wrong, but because a discount every month is not a promotion — it is a price correction you are refusing to make.',
-      ),
-      block('What the customer actually learns', 'h2'),
-      block(
-        'Run a sale every month and you teach one lesson very efficiently: never pay full price. You have not created urgency, you have created a waiting game, and you always lose it.',
-      ),
-      block(
-        '“Limited edition” that happens every month is just the catalogue.',
-        'blockquote',
-      ),
-      block('The alternative', 'h2'),
-      ...bullets([
-        'Change what is in the box instead of what is on the price tag.',
-        'Make the reason for the offer specific and true — end of season, a real batch, a genuine milestone.',
-        'If margin is the problem, fix the price once and defend it with better positioning.',
-      ]),
-    ],
-  },
-  {
-    slug: 'writing-2500-ads-taught-me-this',
-    title: 'Writing 2,500 ads taught me this',
-    excerpt:
-      'Hooks get the attention. Positioning keeps it. Lessons from a year of A/B testing at WHOLELEAF.',
-    category: 'Copywriting',
-    date: '2025-01-27',
-    readingTime: '8 min read',
-    cover: '/assets/metrics/ad-metrics-1.png',
-    body: [
-      block(
-        'In under a year I strategised and wrote more than 2,500 ads — video and static — and tested them on hooks, headlines and CTAs. Revenue went from barely a crore a year to 5.6 crore. Here is what actually repeated.',
-      ),
-      block('1. The hook is a filter, not a magnet', 'h2'),
-      block(
-        'The best-performing hooks did not attract the most people. They attracted the right people and repelled everyone else, which is why the click quality stayed above 93%.',
-      ),
-      block('2. Winners cluster around an insight, not a format', 'h2'),
-      block(
-        'When something wins, most teams clone the format. The durable move is to find the belief the ad changed and rewrite that belief in five formats.',
-      ),
-      block('3. Kill the test, keep the note', 'h2'),
-      ...bullets([
-        'Every losing ad still teaches you which promise the audience did not believe.',
-        'A tested claim is an asset — it belongs in the brand doc, not just the ads account.',
-        'Write down why you thought it would work before you launch it, or you will retro-fit the story.',
-      ]),
-      block(
-        'I zoom out to see the brand and zoom in to fix the comma. Both of those paid for themselves here.',
-      ),
-    ],
-  },
-]
+export const posts = []
 
 export const textures = {
   paper: '/assets/texture/paper.png',
@@ -818,6 +675,7 @@ export default {
   philosophy,
   randomThings,
   whatYoullSee,
+  results,
   caseStudy,
   metrics,
   services,
