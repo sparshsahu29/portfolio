@@ -29,9 +29,9 @@ export default function Home() {
         <Philosophy />
         <Roadmap />
         <Results />
-        <RandomThings />
         <Arsenal />
         <ClientWork />
+        <RandomThings />
         <WhyHireMe />
         <SiteFooter />
       </PaperShell>
@@ -229,6 +229,8 @@ function Results() {
 
 function BrandResult({ brand, stats, boards = [] }) {
   const headline = brand.eyebrow.split(brand.client)
+  // graph first, then the dashboards — all in one lightbox
+  const proofSet = [brand.proofImage, ...boards.map((b) => b.image)]
 
   return (
     <motion.div
@@ -280,11 +282,15 @@ function BrandResult({ brand, stats, boards = [] }) {
               {brand.milestone}
             </motion.span>
 
-            <ProofStack
-              cover={brand.proofImage}
-              coverCaption="Total sales over time — ₹5.64 Cr, +315%"
-              more={boards}
-            />
+            <div className="mt-9">
+              <Snap
+                src={brand.proofImage}
+                all={proofSet}
+                index={0}
+                caption="Total sales over time — ₹5.64 Cr, +315%"
+                rotate={-0.8}
+              />
+            </div>
           </div>
 
           {/* right: breakdown */}
@@ -312,6 +318,26 @@ function BrandResult({ brand, stats, boards = [] }) {
                 </motion.li>
               ))}
             </ul>
+
+            {boards.length > 0 && (
+              <div className="mt-8">
+                <p className="font-mono text-[10px] tracking-[0.24em] text-bronze uppercase">
+                  Ads Manager
+                </p>
+                <div className="mt-3 grid grid-cols-2 gap-4">
+                  {boards.map((b, i) => (
+                    <Snap
+                      key={b.image}
+                      src={b.image}
+                      all={proofSet}
+                      index={i + 1}
+                      caption={b.label}
+                      rotate={i % 2 ? 1 : -1}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -339,50 +365,13 @@ function BrandResult({ brand, stats, boards = [] }) {
   )
 }
 
-/**
- * The sales graph sits on top of a visible pile; the Ads Manager boards peek
- * out behind it. Clicking opens all of them in one lightbox, graph first.
- */
-function ProofStack({ cover, coverCaption, more = [] }) {
-  const all = [cover, ...more.map((b) => b.image)]
-  const extra = more.length
-
-  return (
-    <div className="relative isolate mt-9 mr-3 mb-3">
-      {/* the pile: one sheet per extra screenshot, fanned out behind the cover */}
-      {more.slice(0, 2).map((b, i) => (
-        <motion.div
-          key={b.image}
-          aria-hidden
-          initial={{ opacity: 0, rotate: 0, x: 0, y: 0 }}
-          whileInView={{ opacity: 1, rotate: (i + 1) * 2.2, x: (i + 1) * 6, y: (i + 1) * 5 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ type: 'spring', stiffness: 200, damping: 22, delay: 0.25 + i * 0.08 }}
-          className="absolute inset-0 overflow-hidden bg-white p-2 shadow-[0_10px_24px_-16px_rgba(18,18,18,0.6)]"
-          style={{ zIndex: -1 - i }}
-        >
-          <img src={b.image} alt="" loading="lazy" className="h-full w-full object-cover opacity-80" />
-        </motion.div>
-      ))}
-
-      <Snap src={cover} all={all} index={0} caption={coverCaption} rotate={-0.8} className="relative z-10" />
-
-      {extra > 0 && (
-        <span className="pointer-events-none absolute -top-3 -right-3 z-20 inline-flex items-center gap-1 bg-crimson px-2.5 py-1 font-mono text-[11px] font-semibold text-white shadow-md">
-          +{extra} <span className="font-hand text-sm normal-case">Ads Manager</span>
-        </span>
-      )}
-    </div>
-  )
-}
-
 /* --------------------------- section 6 · why hire me + social proof */
 
 function WhyHireMe() {
   const { hireMe, testimonials } = useContent()
 
   return (
-    <Section id="why-hire-me">
+    <Section id="why-hire-me" className="!pt-8 sm:!pt-10">
       <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <SectionTitle kicker="the pitch">{hireMe.title}</SectionTitle>

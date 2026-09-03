@@ -23,7 +23,7 @@ export default function ClientWork() {
   const hidden = current.images.length - shown.length
 
   return (
-    <Section id="work">
+    <Section id="work" className="!pt-4 sm:!pt-6">
       <SectionTitle kicker={clientWork.eyebrow} hand={clientWork.subtitle}>
         {clientWork.title}
       </SectionTitle>

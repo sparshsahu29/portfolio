@@ -159,15 +159,15 @@ export const caseStudy = {
 export const metrics = {
   title: 'Key Performance Metrics of Top-Performing Ads',
   boards: [
-    { label: 'Ads Manager — Campaign A · ₹10.25L spend · 2.76 ROAS', image: '/assets/metrics/campaign-a.png' },
-    { label: 'Ads Manager — Campaign B · ₹2.48L spend · 3.18 ROAS', image: '/assets/metrics/campaign-b.png' },
+    { label: 'Campaign A · 2.76 ROAS', image: '/assets/metrics/campaign-a.png' },
+    { label: 'Campaign B · 3.18 ROAS', image: '/assets/metrics/campaign-b.png' },
   ],
   /** The four numbers that go directly under the WHOLELEAF case study. */
   cards: [
     { value: '350 → 20K+', label: 'Organic followers', sub: 'In one year' },
     { value: '₹9 Cr', label: 'ARR', sub: 'In one year' },
     { value: '17.2M', label: 'Views in 30 days', sub: '97.6% driven by ads' },
-    { value: '8.9M', label: 'Impressions', sub: 'Single campaign, paid social' },
+    { value: '8.9M', label: 'Impressions', sub: 'Single campaign, organic social' },
   ],
   // pulled straight off the dashboards in the deck
   headline: [

@@ -8,7 +8,7 @@ export const rise = {
 
 export function Section({ id, children, className = '' }) {
   return (
-    <section id={id} className={`relative px-5 py-20 sm:px-10 sm:py-28 ${className}`}>
+    <section id={id} className={`relative px-5 py-14 sm:px-10 sm:py-20 ${className}`}>
       <div className="mx-auto w-full max-w-6xl">{children}</div>
     </section>
   )

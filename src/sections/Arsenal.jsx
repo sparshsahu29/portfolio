@@ -14,12 +14,12 @@ export default function Arsenal() {
   const { services } = useContent()
 
   return (
-    <Section id="services">
+    <Section id="services" className="!pt-4 sm:!pt-6">
       <SectionTitle kicker={services.eyebrow} hand={services.subtitle}>
         {services.title}
       </SectionTitle>
 
-      <div className="space-y-20">
+      <div className="space-y-12 sm:space-y-14">
         {services.grids.map((grid, gi) => (
           <div key={grid.id} id={grid.id} className="scroll-mt-24">
             <div className="mb-8 grid gap-4 border-t border-ink/12 pt-6 lg:grid-cols-[1fr_1.1fr] lg:gap-12">
