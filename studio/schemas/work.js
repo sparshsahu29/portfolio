@@ -26,8 +26,23 @@ export const workTab = defineType({
       name: 'images',
       title: 'Screenshots',
       type: 'array',
-      description: 'Select several files at once to upload in bulk. Drag to reorder. Each opens full-size on click.',
-      of: [defineArrayMember({ type: 'image', options: { hotspot: true } })],
+      description:
+        'Select several files at once to upload in bulk. Drag to reorder. Click a screenshot to add a link — with a link it opens the original piece, without one it opens full-size.',
+      of: [
+        defineArrayMember({
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            defineField({
+              name: 'href',
+              title: 'Link to the original (optional)',
+              type: 'url',
+              description: 'e.g. the published blog, email or website page.',
+              validation: (r) => r.uri({ scheme: ['http', 'https', 'mailto'] }),
+            }),
+          ],
+        }),
+      ],
     }),
   ],
   preview: {

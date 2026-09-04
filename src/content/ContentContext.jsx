@@ -76,7 +76,7 @@ function normalise(data) {
       ...next.clientWork,
       tabs: next.clientWork.tabs
         .filter(Boolean)
-        .map((t) => ({ ...t, images: (t.images ?? []).filter(Boolean) })),
+        .map((t) => ({ ...t, images: (t.images ?? []).filter((img) => img?.src) })),
     }
   }
 

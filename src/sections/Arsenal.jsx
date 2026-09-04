@@ -12,6 +12,7 @@ import { useContent } from '../content/ContentContext.jsx'
  */
 export default function Arsenal() {
   const { services } = useContent()
+  if (!services.grids?.length) return null
 
   return (
     <Section id="services" className="!pt-4 sm:!pt-6">

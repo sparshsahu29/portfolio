@@ -47,7 +47,7 @@ export const siteQuery = /* groq */ `{
 
   "clientWork": *[_type == "clientWork"][0]{
     eyebrow, title, subtitle,
-    tabs[]{ "id": slug.current, label, note, "images": images[].asset->url }
+    tabs[]{ "id": slug.current, label, note, "images": images[]{ "src": asset->url, href } }
   },
 
   "blogPage": *[_type == "blogPage"][0]{

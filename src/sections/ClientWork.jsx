@@ -8,6 +8,9 @@ import { useContent } from '../content/ContentContext.jsx'
 /** How many clippings show before the "+N more" tile. One row on desktop. */
 const VISIBLE = 5
 
+/** Static content stores plain paths; the CMS stores { src, href }. Accept both. */
+const toSample = (img) => (typeof img === 'string' ? { src: img, href: null } : img)
+
 /**
  * Section 5 — client copywriting work, filtered by deliverable.
  * Only one row of uniformly-cropped clippings renders; the rest sit behind a
@@ -17,10 +20,13 @@ const VISIBLE = 5
 export default function ClientWork() {
   const { clientWork } = useContent()
   const { open } = useLightbox()
-  const [active, setActive] = useState(clientWork.tabs[0].id)
+  const [active, setActive] = useState(clientWork.tabs[0]?.id)
   const current = clientWork.tabs.find((t) => t.id === active) ?? clientWork.tabs[0]
-  const shown = current.images.slice(0, VISIBLE)
-  const hidden = current.images.length - shown.length
+  if (!current) return null
+  const samples = current.images.map(toSample)
+  const srcs = samples.map((s) => s.src)
+  const shown = samples.slice(0, VISIBLE)
+  const hidden = samples.length - shown.length
 
   return (
     <Section id="work" className="!pt-4 sm:!pt-6">
@@ -54,13 +60,13 @@ export default function ClientWork() {
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-6"
       >
-        {shown.map((src, i) => (
-          <Clipping key={src} src={src} all={current.images} index={i} label={current.label} />
+        {shown.map((s, i) => (
+          <Clipping key={s.src} {...s} all={srcs} index={i} label={current.label} />
         ))}
 
         {hidden > 0 && (
           <motion.button
-            onClick={() => open(current.images, VISIBLE)}
+            onClick={() => open(srcs, VISIBLE)}
             whileHover={{ y: -6 }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
             className="group flex aspect-[3/4] flex-col items-center justify-center gap-2 border-2 border-dashed border-ink/25 bg-white/40 text-ink transition hover:border-crimson hover:bg-white"
@@ -79,19 +85,30 @@ export default function ClientWork() {
   )
 }
 
-function Clipping({ src, all, index, label }) {
+function Clipping({ src, href, all, index, label }) {
   const { open } = useLightbox()
   const rotate = index % 3 === 0 ? -1.2 : index % 3 === 1 ? 1 : -0.4
+  const Tag = href ? motion.a : motion.button
+  const props = href
+    ? { href, target: '_blank', rel: 'noopener noreferrer', title: 'Open the original' }
+    : { onClick: () => open(all, index), type: 'button' }
 
   return (
-    <motion.button
-      onClick={() => open(all, index)}
+    <Tag
+      {...props}
       style={{ rotate }}
       whileHover={{ rotate: 0, y: -6 }}
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
-      className="relative block w-full cursor-zoom-in bg-white p-1.5 pb-6 shadow-[0_12px_28px_-16px_rgba(18,18,18,0.6)]"
+      className={`group relative block w-full bg-white p-1.5 pb-6 shadow-[0_12px_28px_-16px_rgba(18,18,18,0.6)] ${
+        href ? 'cursor-pointer' : 'cursor-zoom-in'
+      }`}
     >
       <span className="tape -top-3 left-1/2 -translate-x-1/2 -rotate-3 opacity-80" />
+      {href && (
+        <span className="absolute top-3 right-3 z-10 grid h-6 w-6 place-items-center rounded-full bg-ink text-white shadow transition group-hover:bg-crimson">
+          <ArrowUpRight size={13} />
+        </span>
+      )}
       {/* crop to the top of the page — headline + first paragraph is the hook */}
       <img
         src={src}
@@ -102,6 +119,6 @@ function Clipping({ src, all, index, label }) {
       <span className="absolute right-0 bottom-1 left-0 truncate px-2 text-center font-hand text-sm text-ink/55">
         {label} · {index + 1}
       </span>
-    </motion.button>
+    </Tag>
   )
 }
