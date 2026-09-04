@@ -111,12 +111,12 @@ function Rail({ children }) {
 
       {/* edge fades */}
       <div
-        className={`pointer-events-none absolute inset-y-0 -left-5 w-16 bg-gradient-to-r from-cream to-transparent transition-opacity sm:-left-10 ${
+        className={`pointer-events-none absolute inset-y-0 -left-5 w-8 bg-gradient-to-r from-cream/45 to-transparent transition-opacity sm:-left-10 ${
           edge.start ? 'opacity-0' : 'opacity-100'
         }`}
       />
       <div
-        className={`pointer-events-none absolute inset-y-0 -right-5 w-16 bg-gradient-to-l from-cream to-transparent transition-opacity sm:-right-10 ${
+        className={`pointer-events-none absolute inset-y-0 -right-5 w-8 bg-gradient-to-l from-cream/45 to-transparent transition-opacity sm:-right-10 ${
           edge.end ? 'opacity-0' : 'opacity-100'
         }`}
       />

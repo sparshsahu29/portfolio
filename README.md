@@ -43,11 +43,33 @@ npm run dev              # http://localhost:3333
 npm run deploy           # hosts it at <name>.sanity.studio
 ```
 
-**Managing the Arsenal.** Open *Homepage sections → The Arsenal*. Each grid (Performance
-Marketing, Influencer Collabs, Content Creation) has a *Creatives* list. Click **+** and choose
+**What is editable.** Everything on the site. The desk is laid out in page order:
+*Homepage — in page order* (Hero → Who I am → What you'll see next → Results → The Arsenal →
+Copywriting portfolio → Random things → Why hire me → Testimonials → Contact), *Blog* (posts +
+page headings), *Profile & portraits*, *Site settings* (menu, email button). Every list —
+portfolio screenshots, Arsenal creatives, testimonials, skills, one-liners, timeline stops,
+breakdown bullets, numbers — supports add, drag-to-reorder and remove. An emptied list stays
+empty on the site; it does not fall back to the defaults.
+
+**Seeding.** The Studio starts blank. Push the current site content (and upload every image and
+video) once with an Editor token from sanity.io/manage → API → Tokens:
+
+```bash
+SANITY_WRITE_TOKEN=sk... npm run seed:sanity          # skips docs that already exist
+SANITY_WRITE_TOKEN=sk... npm run seed:sanity -- --force  # overwrite everything
+```
+
+On PowerShell: `$env:SANITY_WRITE_TOKEN="sk..."; npm run seed:sanity`.
+
+**Managing the Arsenal.** Open *Homepage → 5 · The Arsenal*. Each grid (Creative Strategy,
+Influencer Collabs, Content Creation) has a *Creatives* list. Click **+** and choose
 *Video* or *Static creative*, fill in title / label / note, upload the file, publish. Drag to
 reorder, use the item menu to remove. Items without a file are skipped by the site, so a
 half-finished entry can never break the page.
+
+**Managing the copywriting portfolio.** *Homepage → 6 · Copywriting portfolio*. Each tab
+(Social, Blogs, Emails, Website Copy) has a *Screenshots* list — select many files at once to
+bulk upload, drag to reorder, remove from the item menu. Tabs themselves can be added or removed.
 
 **Video guidelines.** Vertical 9:16, H.264 MP4, ideally under 15 MB. The originals in
 `portfolio assets/` were 25–160 MB each; the web copies in `public/assets/video/` were made with:

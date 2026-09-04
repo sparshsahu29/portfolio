@@ -31,8 +31,8 @@ export default function Roadmap() {
           className="text-center"
         >
           <h2 className="font-display text-4xl leading-none sm:text-6xl">
-            <span className="text-bronze">{whatYoullSee.title.replace(/\s*Next$/, '')}</span>{' '}
-            <span className="text-crimson italic">Next</span>
+            <span className="text-bronze">{whatYoullSee.title.trim().split(/\s+/).slice(0, -1).join(' ')}</span>{' '}
+            <span className="text-crimson italic">{whatYoullSee.title.trim().split(/\s+/).at(-1)}</span>
           </h2>
           <p className="mt-3 font-hand text-2xl text-crimson sm:text-3xl">{whatYoullSee.subtitle}</p>
         </motion.div>

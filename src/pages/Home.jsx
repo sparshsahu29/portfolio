@@ -41,17 +41,33 @@ export default function Home() {
 
 /* ------------------------------------------------- section 1 · the hook */
 
+/** Splits "a b c" into ["a b", "c"] so the last word can be styled. */
+const splitLast = (s = '') => {
+  const words = s.trim().split(/\s+/)
+  return [words.slice(0, -1).join(' '), words.at(-1) ?? '']
+}
+
 function Hook() {
   const { hero, profile } = useContent()
+  const [headStart, headEnd] = splitLast(hero.headline)
+  const [tagStart, tagEnd] = splitLast(hero.tagline)
+  const emphasis = ['3-second attention span', `${profile.yearsExperience} years`]
 
   return (
     <section id="top" className="relative overflow-hidden px-5 pt-10 pb-8 sm:px-10 sm:pt-12">
       <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1fr_1fr]">
         <motion.div initial="hidden" animate="show" variants={rise}>
           <h1 className="font-display text-[clamp(2.75rem,8vw,5.25rem)] leading-[0.86] text-ink">
-            Content
-            <br />
-            with <span className="text-crimson italic">intent</span>
+            {headStart.includes(' ') ? (
+              <>
+                {headStart.split(' ')[0]}
+                <br />
+                {headStart.split(' ').slice(1).join(' ')}{' '}
+              </>
+            ) : (
+              <>{headStart} </>
+            )}
+            <span className="text-crimson italic">{headEnd}</span>
           </h1>
 
           <div className="relative mt-6 max-w-md">
@@ -61,18 +77,13 @@ function Hook() {
               className="pointer-events-none absolute -inset-x-6 -inset-y-4 -z-10 h-[calc(100%+2rem)] w-[calc(100%+3rem)] rotate-[-1.2deg] object-fill opacity-90"
             />
             <p className="relative py-1.5 font-display text-xl leading-snug text-ink sm:text-2xl">
-              Positioning before posting.{' '}
-              <span className="text-crimson underline decoration-wavy decoration-2">Always.</span>
+              {tagStart}{' '}
+              <span className="text-crimson underline decoration-wavy decoration-2">{tagEnd}</span>
             </p>
           </div>
 
           <p className="mt-6 max-w-lg text-base leading-relaxed text-ink/70 sm:text-[17px]">
-            <span className="font-semibold text-ink">{profile.yearsExperience} years</span> building
-            relevance for brands in a world with a{' '}
-            <span className="marker-underline font-semibold text-bronze">
-              3-second attention span
-            </span>
-            .
+            <Emphasize text={hero.subheadline} terms={emphasis} />
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-4">

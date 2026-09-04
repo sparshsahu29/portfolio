@@ -8,7 +8,7 @@ export default [
   { ignores: ['dist', 'node_modules', 'studio/dist', 'studio/node_modules'] },
   js.configs.recommended,
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{js,jsx,mjs}'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',

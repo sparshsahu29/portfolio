@@ -9,12 +9,13 @@ export const useContent = () => useContext(ContentContext)
 
 const isPlainObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v)
 
-/** Treat null / undefined / empty array / empty string as "not authored yet". */
+/**
+ * Treat null / undefined / blank string as "not authored yet".
+ * An empty array is NOT empty: it means the editor removed every item on
+ * purpose, and the site must honour that instead of resurrecting defaults.
+ */
 const isEmpty = (v) =>
-  v === null ||
-  v === undefined ||
-  (Array.isArray(v) && v.length === 0) ||
-  (typeof v === 'string' && v.trim() === '')
+  v === null || v === undefined || (typeof v === 'string' && v.trim() === '')
 
 /**
  * Deep-merge the CMS response over the static defaults.
@@ -67,6 +68,30 @@ function normalise(data) {
             .filter((item) => (item.type === 'video' ? Boolean(item.src) : Boolean(item.image))),
         }))
         .filter((g) => g.items.length > 0),
+    }
+  }
+
+  if (next.clientWork?.tabs) {
+    next.clientWork = {
+      ...next.clientWork,
+      tabs: next.clientWork.tabs
+        .filter(Boolean)
+        .map((t) => ({ ...t, images: (t.images ?? []).filter(Boolean) })),
+    }
+  }
+
+  if (next.metrics?.boards) {
+    next.metrics = {
+      ...next.metrics,
+      boards: next.metrics.boards.filter((b) => b?.image),
+    }
+  }
+
+  if (next.testimonials?.items) {
+    next.testimonials = {
+      ...next.testimonials,
+      items: next.testimonials.items.filter(Boolean),
+      images: (next.testimonials.images ?? []).filter(Boolean),
     }
   }
 
