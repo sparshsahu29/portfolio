@@ -1,10 +1,3 @@
-/** GROQ fragments shared across queries. */
-const IMAGE = `{ "url": asset->url, "alt": alt, "lqip": asset->metadata.lqip }`
-
-const GALLERY = `{
-  "images": images[]{ "url": asset->url, "alt": alt, "lqip": asset->metadata.lqip, caption, href }
-}`
-
 /**
  * One round trip fetches the entire site.
  * Every field is optional — anything missing falls back to src/data/content.js.
@@ -87,30 +80,6 @@ export const siteQuery = /* groq */ `{
     detail[]{ name, rows[]{ key, value } }
   },
 
-  "socialMedia": *[_type == "workSection" && slug.current == "social"][0]{
-    "title": title, "blurb": blurb,
-    "insights": insights[].asset->url,
-    "grids": grids[].asset->url
-  },
-
-  "blogs": *[_type == "blogWork"][0]{
-    title, niches,
-    groups[]{ title, tags, "images": images[].asset->url }
-  },
-
-  "emails": *[_type == "workSection" && slug.current == "emails"][0]{
-    title, blurb, "images": gallery[].asset->url
-  },
-
-  "marketing": *[_type == "marketing"][0]{
-    title,
-    sections[]{ "id": slug.current, title, items[]{ "image": image.asset->url, links[]{ label, url } } }
-  },
-
-  "websiteCopy": *[_type == "workSection" && slug.current == "website-copy"][0]{
-    title, blurb, "images": gallery[].asset->url
-  },
-
   "hireMe": *[_type == "hireMe"][0]{ title, subtitle, skills, teamNote, promise },
 
   "testimonials": *[_type == "testimonials"][0]{
@@ -146,10 +115,3 @@ export const postQuery = /* groq */ `*[_type == "post" && slug.current == $slug]
     "cover": cover.asset->url
   }
 }`
-
-export const postsQuery = /* groq */ `*[_type == "post" && !(_id in path("drafts.**"))] | order(date desc){
-  "slug": slug.current, title, excerpt, category, date, readingTime,
-  "cover": cover.asset->url
-}`
-
-export { IMAGE, GALLERY }

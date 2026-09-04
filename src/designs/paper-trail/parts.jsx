@@ -83,23 +83,6 @@ export function Snap({ src, all, index = 0, caption, rotate = 0, className = '' 
   )
 }
 
-export function SnapGrid({ images, cols = 'sm:grid-cols-3', captionFor }) {
-  return (
-    <div className={`grid grid-cols-1 gap-6 ${cols} sm:gap-8`}>
-      {images.map((src, i) => (
-        <Snap
-          key={src}
-          src={src}
-          all={images}
-          index={i}
-          rotate={i % 3 === 0 ? -1.6 : i % 3 === 1 ? 1.2 : -0.6}
-          caption={captionFor?.(src, i)}
-        />
-      ))}
-    </div>
-  )
-}
-
 /**
  * Renders `text` with any phrase in `terms` picked out in crimson, the way the
  * bolded phrases read in the original deck.

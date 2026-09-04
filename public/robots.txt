@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# legacy paths that only redirect
+Disallow: /journal
+
+Sitemap: https://portfolio-rho-opal-20.vercel.app/sitemap.xml

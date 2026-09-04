@@ -115,7 +115,7 @@ function Hook() {
           initial={{ opacity: 0, scale: 0.94, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-          className="relative mx-auto w-full max-w-sm lg:max-w-none"
+          className="relative mx-auto hidden w-full max-w-sm lg:block lg:max-w-none"
         >
           <div className="absolute inset-x-6 top-10 bottom-0 -rotate-2 rounded-sm bg-crimson/8" />
           <img

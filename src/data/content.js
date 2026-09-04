@@ -214,137 +214,6 @@ export const metrics = {
   ],
 }
 
-export const socialMedia = {
-  title: 'Social Media',
-  blurb:
-    'Copy, calendars and creative direction for feeds that had to sell — not just look nice.',
-  insights: [
-    '/assets/social/insights-1.png',
-    '/assets/social/insights-2.png',
-    '/assets/social/insights-3.png',
-    '/assets/social/insights-4.png',
-    '/assets/social/insights-5.png',
-  ],
-  grids: [
-    '/assets/social/grid-1.png',
-    '/assets/social/grid-2.png',
-    '/assets/social/grid-3.png',
-  ],
-}
-
-export const blogs = {
-  title: 'Blogs',
-  niches: [
-    'Skincare',
-    'Travel',
-    'Mind Body Wellness',
-    'WordPress',
-    'Finance',
-    'Healthcare',
-    'AI',
-    'Softwares',
-    'EdTech',
-    'MSMEs',
-    'Insurance',
-  ],
-  groups: [
-    {
-      title: 'Skincare & Travel',
-      tags: ['Skincare', 'Travel'],
-      images: [
-        '/assets/blogs/skincare-travel-1.png',
-        '/assets/blogs/skincare-travel-2.png',
-        '/assets/blogs/skincare-travel-3.png',
-        '/assets/blogs/skincare-travel-4.png',
-        '/assets/blogs/skincare-travel-5.png',
-        '/assets/blogs/skincare-travel-6.png',
-      ],
-    },
-    {
-      title: 'Wellness, WordPress & Finance',
-      tags: ['Mind Body Wellness', 'WordPress', 'Finance'],
-      images: [
-        '/assets/blogs/wellness-finance-1.png',
-        '/assets/blogs/wellness-finance-2.png',
-        '/assets/blogs/wellness-finance-3.png',
-        '/assets/blogs/wellness-finance-4.png',
-        '/assets/blogs/wellness-finance-5.png',
-        '/assets/blogs/wellness-finance-6.png',
-        '/assets/blogs/wellness-finance-7.png',
-        '/assets/blogs/wellness-finance-8.png',
-        '/assets/blogs/wellness-finance-9.png',
-      ],
-    },
-    {
-      title: 'Healthcare, AI, Software, EdTech, MSMEs & Insurance',
-      tags: ['Healthcare', 'AI', 'Softwares', 'EdTech', 'MSMEs', 'Insurance'],
-      images: [
-        '/assets/blogs/tech-b2b-1.png',
-        '/assets/blogs/tech-b2b-2.png',
-        '/assets/blogs/tech-b2b-3.png',
-        '/assets/blogs/tech-b2b-4.png',
-        '/assets/blogs/tech-b2b-5.png',
-        '/assets/blogs/tech-b2b-6.png',
-      ],
-    },
-  ],
-}
-
-export const emails = {
-  title: 'Emails',
-  blurb: 'Lifecycle, launch and win-back flows that people actually open.',
-  images: [
-    '/assets/emails/email-1.png',
-    '/assets/emails/email-2.png',
-    '/assets/emails/email-3.png',
-  ],
-}
-
-export const marketing = {
-  title: 'Marketing Content',
-  sections: [
-    {
-      id: 'influencer',
-      title: 'Influencer Collabs',
-      items: [
-        { image: '/assets/influencer/collab-1.png', links: ['Ad Link', 'Creator Profile'] },
-        { image: '/assets/influencer/collab-2.png', links: ['Ad Link', 'Creator Profile'] },
-        { image: '/assets/influencer/collab-3.png', links: ['Ad Link', 'Creator Profile'] },
-        { image: '/assets/influencer/collab-4.png', links: ['Ad Link', 'Creator Profile'] },
-      ],
-    },
-    {
-      id: 'static-ads',
-      title: 'Static Ads',
-      items: [
-        { image: '/assets/static-ads/static-1.png', links: ['Ad Link'] },
-        { image: '/assets/static-ads/static-2.png', links: ['Ad Link'] },
-        { image: '/assets/static-ads/static-3.png', links: ['Ad Link'] },
-        { image: '/assets/static-ads/static-4.png', links: ['Ad Link'] },
-      ],
-    },
-    {
-      id: 'video-ads',
-      title: 'Video Ads',
-      items: [
-        { image: '/assets/video-ads/video-1.png', links: ['Video Link'] },
-        { image: '/assets/video-ads/video-2.png', links: ['Video Link'] },
-        { image: '/assets/video-ads/video-3.png', links: ['Video Link'] },
-        { image: '/assets/video-ads/video-4.png', links: ['Video Link'] },
-      ],
-    },
-    {
-      id: 'creation',
-      title: 'Content Creation',
-      items: [
-        { image: '/assets/creation/reel-1.png', links: ['Video Link'] },
-        { image: '/assets/creation/reel-2.png', links: ['Video Link'] },
-        { image: '/assets/creation/reel-3.png', links: ['Video Link'] },
-      ],
-    },
-  ],
-}
-
 /* ---------------------------------------------- section 4: the arsenal */
 
 /**
@@ -551,12 +420,6 @@ export const clientWork = {
   ],
 }
 
-export const websiteCopy = {
-  title: 'Website Copy',
-  blurb: 'Home pages, landing pages and product pages that carry the brand voice end to end.',
-  images: ['/assets/website-copy/copy-1.png', '/assets/website-copy/copy-2.png'],
-}
-
 export const hireMe = {
   title: 'Why Should A Brand Hire Me?',
   subtitle: 'Core Strategic Skills',
@@ -680,11 +543,6 @@ export default {
   metrics,
   services,
   clientWork,
-  socialMedia,
-  blogs,
-  emails,
-  marketing,
-  websiteCopy,
   hireMe,
   testimonials,
   contact,

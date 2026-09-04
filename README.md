@@ -3,8 +3,9 @@
 Personal portfolio for **Palak Agarwal** (MBA · Brand Marketer · Product Marketer · Creative
 Strategist). Built from her existing Canva PDF portfolio.
 
-**Current stage:** the Paper Trail design is live at `/`. Content is served from Sanity when
-configured and falls back to `src/data/content.js` otherwise, so the site is never blank.
+**Status:** live. Frontend on Vercel, content in Sanity (Studio at `<name>.sanity.studio`).
+Content is served from Sanity when configured and falls back to `src/data/content.js` otherwise,
+so the site is never blank.
 
 ---
 
@@ -27,7 +28,9 @@ Without it the site renders the static fallback content.
 | `/`               | Homepage — Hook, Who I am, Case study, Arsenal, Client work, Why hire me, Contact |
 | `/blog`           | Blog index with category filter + search                    |
 | `/blog/:slug`     | Individual post, Portable Text                              |
-| `/design-review`  | Archive of the four round-1 directions (not linked from nav) |
+| `/journal[/:slug]`| Legacy paths — redirect to `/blog`                          |
+| `/sitemap.xml`    | Live sitemap (Vercel function in `api/sitemap.js`, reads posts from Sanity) |
+| `/robots.txt`     | `public/robots.txt`                                         |
 
 ---
 
@@ -61,6 +64,11 @@ SANITY_WRITE_TOKEN=sk... npm run seed:sanity -- --force  # overwrite everything
 
 On PowerShell: `$env:SANITY_WRITE_TOKEN="sk..."; npm run seed:sanity`.
 
+`scripts/seed-sample-post.mjs` publishes one fully-featured demo blog post the same way.
+
+**Deploying the Studio.** After any schema change: `cd studio && npx sanity deploy`. The
+website needs no redeploy for content changes; Vercel only rebuilds when code is pushed.
+
 **Managing the Arsenal.** Open *Homepage → 5 · The Arsenal*. Each grid (Creative Strategy,
 Influencer Collabs, Content Creation) has a *Creatives* list. Click **+** and choose
 *Video* or *Static creative*, fill in title / label / note, upload the file, publish. Drag to
@@ -69,7 +77,9 @@ half-finished entry can never break the page.
 
 **Managing the copywriting portfolio.** *Homepage → 6 · Copywriting portfolio*. Each tab
 (Social, Blogs, Emails, Website Copy) has a *Screenshots* list — select many files at once to
-bulk upload, drag to reorder, remove from the item menu. Tabs themselves can be added or removed.
+bulk upload, drag to reorder, remove from the item menu. Click a screenshot to add an optional
+*Link to the original*; with a link the card opens the live piece, without one it opens
+full-size. Tabs themselves can be added or removed.
 
 **Video guidelines.** Vertical 9:16, H.264 MP4, ideally under 15 MB. The originals in
 `portfolio assets/` were 25–160 MB each; the web copies in `public/assets/video/` were made with:
@@ -97,12 +107,8 @@ returns is deep-merged over this file in `src/content/ContentContext.jsx`.
 | `whatYoullSee` | "What You'll See Next"                        |
 | `caseStudy`    | WHOLELEAF before/after + breakdown            |
 | `metrics`      | Ads-manager dashboards + Instagram insights   |
-| `socialMedia`  | Social Media pages                            |
-| `blogs`        | Blogs pages (11 niches)                       |
-| `emails`       | Emails page                                   |
 | `services`     | The Arsenal — videos + static creatives        |
 | `clientWork`   | Blogs / Emails / Website copy / Social tabs    |
-| `websiteCopy`  | Website Copy page                             |
 | `hireMe`       | "Why Should A Brand Hire Me?"                 |
 | `testimonials` | Testimonials pages                            |
 | `contact`      | Closing page                                  |
@@ -110,8 +116,8 @@ returns is deep-merged over this file in `src/content/ContentContext.jsx`.
 
 ## Assets
 
-All 68 images were extracted programmatically from the source PDF and organised under
-`public/assets/`:
+Static fallback images live under `public/assets/` (the same files were uploaded to Sanity by the
+seed script, which is what the live site actually serves):
 
 ```
 texture/     paper, ruled notebook, grid, kraft   (the scrapbook look)
@@ -121,11 +127,8 @@ metrics/     ads manager screenshots
 social/      instagram insights + feed grids
 blogs/       published article screenshots
 emails/      email design screenshots
-influencer/  creator collab stills
 static-ads/  static ad creatives
 video/       transcoded 720x1280 MP4s + poster JPGs (the Arsenal)
-video-ads/   video ad stills from the PDF (superseded by video/)
-creation/    UGC / reel stills from the PDF (superseded by video/)
 website-copy/ landing page screenshots
 testimonials/ client screenshots
 work/        Shark Tank / WHOLELEAF proof
@@ -148,14 +151,17 @@ Lifted directly from the PDF:
 | `mint`      | `#79BBA6` | positive metrics            |
 
 Fonts in the PDF were Canva Sans, DO Sans and a marker face. Closest free web equivalents in use:
-**DM Sans** (body), **Playfair Display** / **Instrument Serif** (display), **Caveat** (handwriting),
-**Space Grotesk** + **JetBrains Mono** (the data-forward direction).
+**DM Sans** (body), **Playfair Display** (display), **Caveat** (handwriting), **JetBrains Mono**
+(labels and metadata).
 
 ---
 
-## Next steps
+## Deployment
 
-1. Studio schemas for the remaining sections (hero, about, case study, client work,
-   testimonials, contact, blog posts) — the frontend queries already exist for all of them.
-2. Create the Sanity project, seed it from `content.js`, upload the videos.
-3. SEO (react-helmet-async or SSG), analytics, deploy.
+- **Website:** Vercel, auto-deploys from `main`. Env vars: `VITE_SANITY_PROJECT_ID`,
+  `VITE_SANITY_DATASET`. Optional `SITE_URL` overrides the origin used in the sitemap.
+- **Studio:** `cd studio && npx sanity deploy`.
+- **Sanity CORS:** sanity.io → project → API → CORS origins must list the website origin
+  (no credentials) and `http://localhost:5173` for local dev.
+- **Custom domain:** add it in Vercel, then update the CORS origin, the canonical / `og:url` in
+  `index.html` and the `Sitemap:` line in `public/robots.txt`.

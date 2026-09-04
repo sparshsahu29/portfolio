@@ -71,10 +71,16 @@ const components = {
   types: {
     image: ({ value }) =>
       value?.url ? (
-        <figure className="my-10">
-          <div className="relative bg-white p-2 shadow-[0_14px_34px_-20px_rgba(18,18,18,0.6)]">
+        <figure className="my-10 flex flex-col items-center">
+          {/* tall phone screenshots are capped so they sit inside the reading column */}
+          <div className="relative inline-block max-w-full bg-white p-2 shadow-[0_14px_34px_-20px_rgba(18,18,18,0.6)]">
             <span className="tape -top-3 left-1/2 -translate-x-1/2 -rotate-2" />
-            <img src={value.url} alt={value.alt ?? ''} loading="lazy" className="w-full" />
+            <img
+              src={value.url}
+              alt={value.alt ?? ''}
+              loading="lazy"
+              className="block max-h-[460px] w-auto max-w-full object-contain"
+            />
           </div>
           {value.caption && (
             <figcaption className="mt-3 text-center font-hand text-xl text-ink/55">
@@ -183,7 +189,7 @@ export default function BlogPost() {
               )}
             </div>
 
-            <h1 className="mt-4 font-display text-[clamp(2.4rem,7vw,4.5rem)] leading-[0.98] text-ink">
+            <h1 className="mt-4 font-display text-[clamp(1.9rem,4.5vw,3rem)] leading-[1.08] text-ink">
               {post?.title}
             </h1>
 

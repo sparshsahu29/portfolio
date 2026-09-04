@@ -95,19 +95,6 @@ function normalise(data) {
     }
   }
 
-  if (next.marketing?.sections) {
-    next.marketing = {
-      ...next.marketing,
-      sections: next.marketing.sections.map((s) => ({
-        ...s,
-        items: (s.items ?? []).map((item) => ({
-          ...item,
-          links: (item.links ?? []).map((l) => (typeof l === 'string' ? { label: l, url: null } : l)),
-        })),
-      })),
-    }
-  }
-
   return next
 }
 

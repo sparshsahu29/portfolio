@@ -44,7 +44,7 @@ export default function BlogIndex() {
           <p className="font-mono text-[11px] tracking-[0.3em] text-bronze uppercase">
             The Strategist’s Diary
           </p>
-          <h1 className="mt-4 max-w-4xl font-display text-[clamp(2.6rem,8vw,6rem)] leading-[0.9] text-ink">
+          <h1 className="mt-4 max-w-3xl font-display text-[clamp(2.2rem,5.5vw,4rem)] leading-[0.95] text-ink">
             {blogPage.headline}
           </h1>
           <p className="mt-3 font-hand text-3xl text-crimson sm:text-4xl">

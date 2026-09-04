@@ -21,12 +21,12 @@ export default function RandomThings() {
     <section id="random-things" className="relative overflow-hidden px-5 pt-6 pb-0 sm:px-10">
       <div className="mx-auto max-w-6xl">
         {/* mobile: title first, then figure, then notes */}
-        <ArchTitle text={randomThings.title} className="mx-auto w-[min(90vw,420px)] lg:hidden" />
+        <ArchTitle text={randomThings.title} flat className="mx-auto -mb-6 w-[min(90vw,420px)] lg:hidden" />
 
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_minmax(300px,380px)_1fr] lg:gap-6">
+        <div className="grid items-center gap-2 lg:grid-cols-[1fr_minmax(300px,380px)_1fr] lg:gap-6">
           <Column notes={left} side="left" className="order-2 lg:order-1" />
 
-          <div className="relative order-1 mx-auto w-full max-w-[380px] lg:order-2">
+          <div className="relative order-1 mx-auto w-full max-w-[300px] lg:order-2 lg:max-w-[380px]">
             <ArchTitle
               text={randomThings.title}
               className="absolute inset-x-[-12%] top-0 z-10 hidden lg:block"
@@ -42,10 +42,13 @@ export default function RandomThings() {
 }
 
 /** Title set along an arc, drawn with a spring so it "lands" over her head. */
-function ArchTitle({ text, className = '' }) {
+function ArchTitle({ text, flat = false, className = '' }) {
+  // `flat` is the phone variant: a shallower arc so the svg box has no dead space under the text
+  const box = flat ? '0 0 400 110' : '0 0 400 210'
+  const arc = flat ? 'M 10 105 A 330 330 0 0 1 390 105' : 'M 30 200 A 170 170 0 0 1 370 200'
   return (
     <motion.svg
-      viewBox="0 0 400 210"
+      viewBox={box}
       className={`overflow-visible ${className}`}
       initial={{ opacity: 0, scale: 0.85, y: 24 }}
       whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -54,14 +57,14 @@ function ArchTitle({ text, className = '' }) {
       aria-hidden
     >
       <defs>
-        <path id="arch" d="M 30 200 A 170 170 0 0 1 370 200" fill="none" />
+        <path id={flat ? 'arch-flat' : 'arch'} d={arc} fill="none" />
       </defs>
       <text
         className="font-hand fill-crimson"
-        style={{ fontSize: 46, fontWeight: 600 }}
+        style={{ fontSize: flat ? 40 : 46, fontWeight: 600 }}
         textAnchor="middle"
       >
-        <textPath href="#arch" startOffset="50%">
+        <textPath href={flat ? '#arch-flat' : '#arch'} startOffset="50%">
           {text}
         </textPath>
       </text>
@@ -80,14 +83,14 @@ function Figure({ src, alt }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={view}
       transition={{ ...spring, delay: 0.05 }}
-      className="relative aspect-[3/4] w-full overflow-hidden"
+      className="relative aspect-square w-full overflow-hidden lg:aspect-[3/4]"
     >
       {/* source PNG: figure spans ~x35–63%, y24–80% of a 3:4 canvas → scale 2.3, anchor on the head */}
       <img
         src={src}
         alt={alt}
         loading="lazy"
-        className="absolute left-1/2 w-[230%] max-w-none -translate-x-1/2 top-[-32%] lg:top-[-18%]"
+        className="absolute left-1/2 w-[230%] max-w-none -translate-x-1/2 top-[-62%] lg:top-[-18%]"
       />
     </motion.div>
   )

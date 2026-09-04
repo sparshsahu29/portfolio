@@ -114,7 +114,8 @@ export function EmailButton({ className = '', size = 'sm', label }) {
 }
 
 export function SiteNav() {
-  const { nav } = useContent()
+  const { nav, cta } = useContent()
+  const emailHref = useEmailHref()
   const [open, setOpen] = useState(false)
   const { pathname, hash } = useLocation()
 
@@ -127,13 +128,13 @@ export function SiteNav() {
   return (
     <header className="sticky top-0 z-50 border-b border-ink/10 bg-cream/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:px-10">
-        <Link to="/" className="flex min-w-0 shrink flex-col leading-none">
-          <span className="font-hand text-2xl text-crimson">
+        <Link to="/" className="flex min-w-0 flex-1 flex-col leading-none md:flex-none">
+          <span className="font-hand text-xl text-crimson sm:text-2xl">
             {nav.brand ?? 'Palak'}
             <span className="text-ink">.</span>
           </span>
           {nav.brandTagline && (
-            <span className="mt-1 hidden truncate font-mono text-[9px] tracking-[0.16em] text-ink/55 uppercase min-[400px]:block sm:text-[10px]">
+            <span className="mt-1 max-w-[230px] font-mono text-[8px] leading-[1.5] tracking-[0.14em] text-ink/55 uppercase sm:max-w-none sm:truncate sm:text-[10px] sm:tracking-[0.16em]">
               {nav.brandTagline}
             </span>
           )}
@@ -153,33 +154,49 @@ export function SiteNav() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           {/* stays reachable at every scroll position, on every breakpoint */}
-          <EmailButton className="hidden sm:inline-flex" />
+          <div className="hidden sm:block">
+            <EmailButton />
+          </div>
+          <a
+            href={emailHref}
+            {...emailLinkProps}
+            aria-label={cta?.label ?? 'Email Me'}
+            className="grid h-10 w-10 place-items-center rounded-full bg-crimson text-white transition hover:bg-ink sm:hidden"
+          >
+            <Mail size={17} />
+          </a>
           <button
-            className="md:hidden"
+            type="button"
+            className="grid h-10 w-10 place-items-center rounded-full border border-ink/15 text-ink transition hover:border-crimson hover:text-crimson md:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-label="Menu"
             aria-expanded={open}
           >
-            {open ? <X size={20} /> : <Menu size={20} />}
+            {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-ink/10 px-5 pb-4 md:hidden">
+        <nav className="border-t border-ink/10 px-5 pt-2 pb-5 md:hidden">
           {nav.links.map((n) => (
             <Link
               key={n.label}
               to={{ pathname: n.to, hash: n.hash ?? '' }}
               onClick={() => setOpen(false)}
-              className="py-2 text-sm font-medium text-ink/70"
+              className={`flex items-center justify-between border-b border-ink/8 py-3.5 font-display text-2xl transition hover:text-crimson ${
+                isActive(n) ? 'text-crimson' : 'text-ink'
+              }`}
             >
               {n.label}
+              <ArrowUpRight size={16} className="text-ink/30" />
             </Link>
           ))}
-          <EmailButton className="mt-2 sm:hidden" />
+          <div className="mt-4 sm:hidden">
+            <EmailButton size="md" className="w-full" />
+          </div>
         </nav>
       )}
     </header>
