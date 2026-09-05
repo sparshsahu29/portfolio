@@ -34,7 +34,7 @@ export const nav = {
   links: [
     { label: 'Home', to: '/', hash: '' },
     { label: 'Work', to: '/', hash: '#work' },
-    { label: 'Services', to: '/', hash: '#services' },
+    { label: 'Services', to: '/', hash: '#roadmap' },
     { label: 'Blog', to: '/blog' },
     { label: 'Contact', to: '/', hash: '#contact' },
   ],

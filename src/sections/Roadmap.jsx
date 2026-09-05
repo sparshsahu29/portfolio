@@ -21,7 +21,7 @@ export default function Roadmap() {
   }
 
   return (
-    <section id="roadmap" className="relative px-5 py-10 sm:px-10 sm:py-14">
+    <section id="roadmap" className="relative scroll-mt-20 px-5 py-10 sm:px-10 sm:py-14">
       <div className="mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
